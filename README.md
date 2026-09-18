@@ -7,22 +7,20 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
 
 ### Neural Networks and Deep Learning
 
-<p>Progress: <img src="https://geps.dev/progress/13?label=%20" width="150" height="10" style="vertical-align: middle;" alt="50%" /> 13%</p>
+<p>Progress: <img src="https://geps.dev/progress/38?label=%20" width="150" height="10" style="vertical-align: middle;" alt="38%" /> 38%</p>
 
 <table>
   <thead>
     <tr>
-      <th>Status</th>
       <th>Week</th>
       <th>Description</th>
-      <th> </th>
-      <th>Tasks</th>
+      <th>Status</th>
+      <th>Task</th>
       <th>Due</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle"> 1 </td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">Introduction to Deep Learning</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
@@ -30,19 +28,17 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
       <td rowspan="1" style="text-align: center; vertical-align: middle">-</td>
     </tr>
     <tr>
-      <td rowspan="2" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="2" style="text-align: center; vertical-align: middle"> 2 </td>
       <td rowspan="2" style="text-align: center; vertical-align: middle">Neural Networks Basics</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 2</td>
       <td rowspan="2" style="text-align: center; vertical-align: middle">Sept 26</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Logistic Regression with a Neural Network Mindset</td>
     </tr>
     <tr>
-      <td rowspan="2" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="2" style="text-align: center; vertical-align: middle"> 3 </td>
       <td rowspan="2" style="text-align: center; vertical-align: middle">Shallow Neural Networks</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
@@ -54,7 +50,6 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Planar Data Classification with One Hidden Layer</td>
     </tr>
     <tr>
-      <td rowspan="3" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="3" style="text-align: center; vertical-align: middle"> 4 </td>
       <td rowspan="3" style="text-align: center; vertical-align: middle">Deep Neural Networks</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
