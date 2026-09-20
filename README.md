@@ -67,11 +67,9 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
   </tbody>
 </table>
 
-## Strang's Linear Algebra and Learning from Data (book)
-Accompanying text for linear algebra and optimization problems. Covers math for machine learning, and has good problem sets.
+## Bishop and Bishop's Deep Learning Foundations and Concepts (book)
 
-I'll go through Part 1 as I move through the course. Hopefully, I'm able to finish at least one problem set each week.
-### Part I: Highlights of Linear Algebra
+Accompanying text with good exercises. In order of relevance instead of chapters.
 
 <p>Progress: <img src="https://geps.dev/progress/0?label=%20" width="150" height="10" style="vertical-align: middle;" alt="50%" /> 0%</p>
 
@@ -89,27 +87,21 @@ I'll go through Part 1 as I move through the course. Hopefully, I'm able to fini
       <td rowspan="2" style="text-align: center; vertical-align: middle">2</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">
-        Multiplication $\mathbf{Ax}$ Using Columns of $\mathbf{A}$
+        Chapter 7 - Gradient Descent
       </td>
       <td rowspan="2" style="text-align: center; vertical-align: middle">Sept 26</td>
     </tr>
     <tr>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">
-        Matrix-Matrix Multiplication $\mathbf{AB}$
+        Chapter 8 - Back Propagation
       </td>
     </tr>
     <tr>
       <td style="text-align: center; vertical-align: middle">3</td>
       <td style="text-align: center; vertical-align: middle">&#9744;</td>
-      <td style="text-align: left; vertical-align: middle">The Four Fundamental Subspaces</td>
+      <td style="text-align: left; vertical-align: middle">Chapter 2 - Probabilities</td>
       <td style="text-align: center; vertical-align: middle">Oct 2</td>
-    </tr>
-    <tr>
-      <td style="text-align: center; vertical-align: middle">4</td>
-      <td style="text-align: center; vertical-align: middle">&#9744;</td>
-      <td style="text-align: left; vertical-align: middle">Elimination and $A=LU$</td>
-      <td style="text-align: center; vertical-align: middle">Oct 4</td>
     </tr>
     </tbody>
 </table>
