@@ -7,7 +7,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
 
 ### Neural Networks and Deep Learning
 
-<p>Progress: <img src="https://geps.dev/progress/50?label=%20" width="150" height="10" style="vertical-align: middle;" alt="50%" /> 50%</p>
+<p>Progress: <img src="https://geps.dev/progress/63?label=%20" width="150" height="10" style="vertical-align: middle;" alt="63%" /> 63%</p>
 
 <table>
   <thead>
@@ -46,7 +46,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
       <td rowspan="2" style="text-align: center; vertical-align: middle">Oct 2</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Planar Data Classification with One Hidden Layer</td>
     </tr>
     <tr>
