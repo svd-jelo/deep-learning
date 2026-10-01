@@ -7,7 +7,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
 
 ### Neural Networks and Deep Learning
 
-<p>Progress: <img src="https://geps.dev/progress/63?label=%20" width="150" height="10" style="vertical-align: middle;" alt="63%" /> 63%</p>
+<p>Progress: <img src="https://geps.dev/progress/100?label=%20" width="150" height="10" style="vertical-align: middle;" alt="100%" /> 100%</p>
 
 <table>
   <thead>
@@ -52,17 +52,74 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
     <tr>
       <td rowspan="3" style="text-align: center; vertical-align: middle"> 4 </td>
       <td rowspan="3" style="text-align: center; vertical-align: middle">Deep Neural Networks</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 4</td>
       <td rowspan="3" style="text-align: center; vertical-align: middle">Oct 4</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Building your Deep Neural Network: Step by Step</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Deep Neural Network: Application</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Progress: <img src="https://geps.dev/progress/0?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 0%</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Week</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Task</th>
+      <th>Due</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="4" style="text-align: center; vertical-align: middle"> 1 </td>
+      <td rowspan="4" style="text-align: center; vertical-align: middle">Practical Aspects of Deep Learning</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 1</td>
+      <td rowspan="4" style="text-align: center; vertical-align: middle">-</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Initialization</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Regularization</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Gradient Checking</td>
+    </tr>
+    <tr>
+      <td rowspan="2" style="text-align: center; vertical-align: middle"> 2 </td>
+      <td rowspan="2" style="text-align: center; vertical-align: middle">Optimization Algorithms</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 2</td>
+      <td rowspan="2" style="text-align: center; vertical-align: middle">Sept 26</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Optimization Methods</td>
+    </tr>
+    <tr>
+      <td rowspan="2" style="text-align: center; vertical-align: middle"> 3 </td>
+      <td rowspan="2" style="text-align: center; vertical-align: middle">Hyperparameter Tuning, Batch Normalization and Programming Frameworks</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 3</td>
+      <td rowspan="2" style="text-align: center; vertical-align: middle">Oct 2</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - TensorFlow Introduction</td>
     </tr>
   </tbody>
 </table>
