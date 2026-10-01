@@ -67,6 +67,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
   </tbody>
 </table>
 
+## Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization
 <p>Progress: <img src="https://geps.dev/progress/0?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 0%</p>
 
 <table>
@@ -83,9 +84,9 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
     <tr>
       <td rowspan="4" style="text-align: center; vertical-align: middle"> 1 </td>
       <td rowspan="4" style="text-align: center; vertical-align: middle">Practical Aspects of Deep Learning</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 1</td>
-      <td rowspan="4" style="text-align: center; vertical-align: middle">-</td>
+      <td rowspan="4" style="text-align: center; vertical-align: middle">Oct 4</td>
     </tr>
     <tr>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
@@ -104,18 +105,19 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
       <td rowspan="2" style="text-align: center; vertical-align: middle">Optimization Algorithms</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 2</td>
-      <td rowspan="2" style="text-align: center; vertical-align: middle">Sept 26</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 10</td>
     </tr>
     <tr>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Optimization Methods</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 11</td>
     </tr>
     <tr>
       <td rowspan="2" style="text-align: center; vertical-align: middle"> 3 </td>
       <td rowspan="2" style="text-align: center; vertical-align: middle">Hyperparameter Tuning, Batch Normalization and Programming Frameworks</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 3</td>
-      <td rowspan="2" style="text-align: center; vertical-align: middle">Oct 2</td>
+      <td rowspan="2" style="text-align: center; vertical-align: middle">Oct 17</td>
     </tr>
     <tr>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
