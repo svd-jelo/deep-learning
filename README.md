@@ -84,7 +84,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
     <tr>
       <td rowspan="4" style="text-align: center; vertical-align: middle"> 1 </td>
       <td rowspan="4" style="text-align: center; vertical-align: middle">Practical Aspects of Deep Learning</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 1</td>
       <td rowspan="4" style="text-align: center; vertical-align: middle">Oct 4</td>
     </tr>
