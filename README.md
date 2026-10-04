@@ -68,7 +68,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
 </table>
 
 ## Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization
-<p>Progress: <img src="https://geps.dev/progress/0?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 0%</p>
+<p>Progress: <img src="https://geps.dev/progress/50?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 50%</p>
 
 <table>
   <thead>
@@ -89,15 +89,15 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
       <td rowspan="4" style="text-align: center; vertical-align: middle">Oct 4</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Initialization</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Regularization</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Gradient Checking</td>
     </tr>
     <tr>
