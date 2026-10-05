@@ -80,7 +80,7 @@ def activation_forward(z, activation):
         raise ValueError('Activation function should be either relu or sigmoid')
 
 # ACTIVATION BACKWARD
-def relu_backward(da, z)
+def relu_backward(da, z):
     """
     :param da: 2d np.ndarray representing the gradient with respect to the activation of the current layer
     :param z: 2d np.ndarray representing the pre-activation values of the current layer
@@ -137,4 +137,53 @@ def mean_squared_error(a,y):
     assert a.shape == y.shape
     m = a.shape[1]
     cost = la.norm(a - y)**2
-    return cost / m
+    return cost / (2*m)
+
+def compute_cost(a,y,func):
+    """
+    :param a: 2d np.ndarray representing the activations from the output layer
+    :param y: 2d np.ndarray representing ground truth labels
+    :param func: str; type of cost function to be used
+    :return: float; result of evaluating the mean squared error C(a,y)
+    """
+    if func == 'cross_entropy':
+        return cross_entropy_multi(a, y)
+    elif func == 'mean_squared_error':
+        return mean_squared_error(a, y)
+    else:
+        raise ValueError('Cost function should be either cross_entropy or mean_squared_error')
+
+# COST BACKWARD
+def quadratic_cost_backward(a, y):
+    """
+    :param a: 2d np.ndarray representing the activations from the output layer
+    :param y: 2d np.ndarray representing ground truth labels
+    :return: 2d np.ndarray of shape a.shape representing da
+    """
+    assert a.shape == y.shape
+    m = a.shape[1]
+    return (1/m) * (a-y)
+
+def cross_entropy_multi_backward(a, y):
+    """
+    :param a: 2d np.ndarray representing the activations from the output layer
+    :param y: 2d np.ndarray representing ground truth labels
+    :return: 2d np.ndarray of shape a.shape representing da
+    """
+    assert a.shape == y.shape
+    m = a.shape[1]
+    return -(1/m) * (y / a)
+
+def cost_backward(a, y, func):
+    """
+    :param a: 2d np.ndarray representing the activations from the output layer
+    :param y: 2d np.ndarray representing ground truth labels
+    :param func: str; type of cost function to be used
+    :return: 2d np.ndarray of shape a.shape representing da
+    """
+    if func == 'cross_entropy':
+        return cross_entropy_multi_backward(a, y)
+    elif func == 'mean_squared_error':
+        return quadratic_cost_backward(a, y)
+    else:
+        raise ValueError('Cost function should be either cross_entropy or mean_squared_error')

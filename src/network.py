@@ -1,28 +1,38 @@
 import numpy as np
+from sklearn.metrics import accuracy_score
 from src.functions import *
 
 class Network:
     def __init__(self,
                  sizes,
+                 activation_functions,
                  learning_rate=0.1,
                  mini_batch_size=10,
-                 cost="quadratic",
+                 cost="mean_squared_error",
                  init_method="naive",
                  verbose=False,
                  random_state=None,
+                 max_epochs = 50,
+                 tol = 1e-3,
                  **kwargs):
         self.sizes = sizes
         self.learning_rate = learning_rate
+        self.activation_functions = activation_functions
         self.mini_batch_size = mini_batch_size
         self.init_method = init_method
         self.verbose = verbose
         self.cost = cost
+        self.max_epochs = max_epochs
+        self.tol = tol
 
         if not random_state:
             random_state = 42
         self.random_state = random_state
 
-        self.weights, self.biases = map(list, zip(*Network.initialize_parameters(self.sizes, self.init_method, random_state=random_state, **kwargs)))
+        self.weights = None
+        self.biases = None
+        #self.activations = None
+        self.kwargs = kwargs
 
     @staticmethod
     def initialize_parameters(layer_dims: list[int], method: str = "naive", random_state=None, **kwargs):
@@ -98,11 +108,92 @@ class Network:
         dw = dz @ a_prev.T
         db = np.sum(dz, axis=1, keepdims=True)
         da_prev = weight.T @ dz
-        grads = {'dw': dw, 'db': db, 'da_prev': da_prev}
-        return grads
+        return {'dw': dw, 'db': db}, da_prev
 
     def fit(self, X, y):
-        
+        rng = np.random.default_rng(self.random_state)
 
+        # Initialize parameters
+        self.weights, self.biases = map(list,
+                                        zip(*Network.initialize_parameters(self.sizes,
+                                                                           self.init_method,
+                                                                           random_state=self.random_state,
+                                                                           **self.kwargs)))
+
+        #self.activations = []
+        for epoch in range(self.max_epochs):
+            perm = rng.permutation(X.shape[1])
+            X_shuffled = X[:,perm]
+            y_shuffled = y[:,perm]
+
+            epoch_cost = 0
+            for n in range(0,X_shuffled.shape[1],self.mini_batch_size):
+                a_prev = X_shuffled[:,n:n+self.mini_batch_size]
+                caches_forward = []
+                for l in range(len(self.weights)):
+                    cache = Network.feedforward(a_prev, self.weights[l], self.biases[l], activation=self.activation_functions[l])
+                    caches_forward.append(cache)
+                    a_prev = cache['a']
+                    #self.activations.append(cache['a'])
+
+                # Cost function
+                cost_value = compute_cost(a_prev, y_shuffled[:,n:n+self.mini_batch_size], self.cost)
+                epoch_cost += cost_value * self.mini_batch_size
+
+                # Backward pass
+                grads = []
+                da_L = cost_backward(caches_forward[-1]['a'], y_shuffled[:,n:n+self.mini_batch_size], self.cost)
+                if len(caches_forward) < 2:
+                    a_prev = X[:,n:n+self.mini_batch_size]
+                else:
+                    a_prev = caches_forward[-2]['a']
+                grads_L, da_prev = Network.backward(a_prev, da_L, caches_forward[-1], self.activation_functions[-1])
+                grads.append(grads_L)
+
+                for l in reversed(range(len(self.weights)-1)):
+                    da = da_prev
+                    a_prev = caches_forward[l-1]['a'] if l>0 else X_shuffled[:,n:n+self.mini_batch_size]
+                    cache_forward = caches_forward[l]
+                    activation_function = self.activation_functions[l]
+                    grads_l, da_prev = Network.backward(a_prev, da, cache_forward, activation_function)
+                    grads.append(grads_l)
+                grads = grads[::-1]
+
+                # Weight update
+                assert len(grads) == len(self.weights)
+                for l in range(len(grads)):
+                    self.weights[l] -= self.learning_rate * grads[l]['dw']
+                    self.biases[l] -= self.learning_rate * grads[l]['db']
+
+            epoch_cost /= X_shuffled.shape[1]
+
+            if self.verbose:
+                if epoch % 100 == 0:
+                    print(f'epoch: {epoch}, cost: {epoch_cost}')
+
+            if abs(epoch_cost) < self.tol:
+                print(f'epoch: {epoch}, cost: {epoch_cost}')
+                break
+
+        return self
+
+    def predict_proba(self, X):
+        caches_forward = []
+        a_prev = X
+        for l in range(len(self.weights)):
+            cache = Network.feedforward(a_prev, self.weights[l], self.biases[l],
+                                        activation=self.activation_functions[l])
+            caches_forward.append(cache)
+            a_prev = cache['a']
+
+        return a_prev
+
+    def predict(self, X):
+        proba = self.predict_proba(X)
+        return np.argmax(proba, axis=0)
+
+    def score(self, X, y):
+        ypred = self.predict(X)
+        return accuracy_score(y, ypred)
 
 
