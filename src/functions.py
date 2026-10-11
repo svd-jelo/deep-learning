@@ -61,7 +61,9 @@ def sigmoid_forward(z):
     :return: np.ndarray; results of evaluating sigmoid(z)
     """
     assert len(z.shape) == 2
-    return 1 / (1 + np.exp(-z))
+    with np.errstate(over='ignore'):
+        result = 1 / (1 + np.exp(-z))
+    return result
 
 def activation_forward(z, activation):
     """
@@ -120,11 +122,12 @@ def cross_entropy_multi(a,y):
     """
     :param a: 2d np.ndarray representing the activations from the output layer
     :param y: 2d np.ndarray representing ground truth labels
-    :return: float; result of evaluating the cross entropy cost function C(a,y) for multiclass classification
+    :return: float; result of evaluating the cross entropy cost function C(a,y) for multilabel classification
     """
     assert a.shape == y.shape
     m = a.shape[1]
-    cost = np.sum(y * np.log(a), axis=0, keepdims=True)
+    a_clipped = np.clip(a, 1e-12, 1-1e-12)
+    cost = np.sum(y * np.log(a_clipped) + (1-y) * np.log(1-a_clipped), axis=0, keepdims=True)
     cost = np.sum(cost, axis=1, keepdims=True)
     return (-1/m) * np.squeeze(cost)
 
@@ -172,7 +175,8 @@ def cross_entropy_multi_backward(a, y):
     """
     assert a.shape == y.shape
     m = a.shape[1]
-    return -(1/m) * (y / a)
+    a_clipped = np.clip(a, 1e-12, 1-1e-12)
+    return (1/m) * (a_clipped-y) / (a_clipped * (1-a_clipped))
 
 def cost_backward(a, y, func):
     """
