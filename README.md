@@ -68,7 +68,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
 </table>
 
 ## Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization
-<p>Progress: <img src="https://geps.dev/progress/50?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 50%</p>
+<p>Progress: <img src="https://geps.dev/progress/75?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 75%</p>
 
 <table>
   <thead>
@@ -103,12 +103,12 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
     <tr>
       <td rowspan="2" style="text-align: center; vertical-align: middle"> 2 </td>
       <td rowspan="2" style="text-align: center; vertical-align: middle">Optimization Algorithms</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 2</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 10</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Optimization Methods</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 11</td>
     </tr>
