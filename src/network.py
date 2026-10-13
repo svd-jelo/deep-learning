@@ -1,9 +1,10 @@
 import numpy as np
 from sklearn.metrics import accuracy_score
-from sklearn.preprocessing import LabelBinarizer, StandardScaler
-
 from src.functions import *
 from sklearn.base import BaseEstimator, TransformerMixin
+
+# TODO: Create aptimizer.py to contain momentum, RMSprop, and Adam methods
+# TODO: Pass optimizer to constructor and implement optimizers in fit
 
 class Network(BaseEstimator, TransformerMixin):
     def __init__(self,
@@ -20,15 +21,13 @@ class Network(BaseEstimator, TransformerMixin):
                  verbose=False,
                  random_state=None,
                  max_epochs = 50,
-                 normalize=True,
                  early_stop_patience = np.inf,
                  learning_schedule_patience = np.inf,
                  min_delta = 1e-4,
                  momentum = 0.0,
                  tol = 1e-3,
                  monitor_cost=False,
-                 monitor_accuracy=False,
-                 val_data=None):
+                 monitor_accuracy=False):
         self.sizes = sizes
         self.learning_rate = learning_rate
         self.activation_functions = activation_functions
@@ -49,8 +48,6 @@ class Network(BaseEstimator, TransformerMixin):
         self.monitor_cost = monitor_cost
         self.monitor_accuracy = monitor_accuracy
         self.random_state = random_state
-        self.val_data = val_data
-        self.normalize = normalize
         self.scale = None
         self.encode = None
 
@@ -203,21 +200,30 @@ class Network(BaseEstimator, TransformerMixin):
 
         return epoch_cost
 
-    def fit(self, X, y):
+    def fit(self, X_train, y_train, X_val=None, y_val=None,):
+        assert X_train.shape[1] == y_train.shape[1], \
+            f"Mismatch in dim 1: n_samples in X_train is {X_train.shape[1]}, but y_train has {y_train.shape[1]}"
+
+        assert X_train.shape[0] == self.sizes[0], \
+            f"Features mismatch: n_features in X_train is {X_train.shape[0]}, but input layer expects {self.sizes[0]}"
+
+        if X_val is not None:
+            assert y_val is not None, "y_val must not be None"
+            assert X_val.shape[1] == y_val.shape[1], \
+                f"Mismatch in dim 1: n_samples in X_val is {X_val.shape[1]}, but y_val has {y_val.shape[1]}"
+
+        if y_val is not None:
+            assert X_val is not None, "X_val must not be None"
+            assert X_val.shape[1] == y_val.shape[1], \
+                f"Mismatch in dim 1: n_samples in X_val is {X_val.shape[1]}, but y_val has {y_val.shape[1]}"
+            assert y_val.shape[0] == self.sizes[-1], \
+                f"Target mismatch: Targets have {y_val.shape[0]} labels, but output layer expects {self.sizes[-1]}"
+
+        assert y_train.shape[0] == self.sizes[-1], \
+            f"Target mismatch: Targets have {y_train.shape[0]} labels, but output layer expects {self.sizes[-1]}"
+
         if self.random_state is None:
             self.random_state = 42
-
-        # Training Data
-        self.scale = StandardScaler()
-        self.encode = LabelBinarizer()
-        X_ = self.scale.fit_transform(X).T if self.normalize else X.copy().T
-        y_ = self.encode.fit_transform(y).T
-
-        # Validation Data
-        X_val = None
-        y_val = None
-        if self.val_data is not None:
-            X_val, y_val = self.val_data
 
         # Initialize parameters
         self.weights, self.biases = map(list,
@@ -235,16 +241,15 @@ class Network(BaseEstimator, TransformerMixin):
         rng = np.random.default_rng(self.random_state)
         best_loss, val_loss, wait_sched, wait_stop, best_params = np.inf, np.nan, 0, 0, None
         for epoch in range(self.max_epochs):
-            perm = rng.permutation(len(X))
-            X_shuffled = X_[:,perm]
-            y_shuffled = y_[:,perm]
+            perm = rng.permutation(len(X_train))
+            X_shuffled = X_train[:,perm]
+            y_shuffled = y_train[:,perm]
             epoch_cost = self.run_epoch(X_shuffled, y_shuffled)
             self.cost_value = epoch_cost
 
             if self.monitor_accuracy:
-                assert self.val_data is not None
-                train_score = self.score(X, y)
-                val_score = self.score(X_val, y_val)
+                train_score = self.score(X_train, y_train)
+                val_score = self.score(X_val, y_val) if X_val is not None else None
 
                 self.training_accuracy.append(train_score)
                 self.val_accuracy.append(val_score)
@@ -254,19 +259,17 @@ class Network(BaseEstimator, TransformerMixin):
                     print(f'epoch: {epoch}, cost: {epoch_cost}')
 
             if self.monitor_cost:
-                if self.val_data is not None:
+                if X_val is not None:
                     a_val = self.predict_proba(X_val)
-                    y_valt = self.encode.transform(y_val).T
-                    val_loss = compute_cost(a_val, y_valt, self.cost)
+                    val_loss = compute_cost(a_val, y_val, self.cost)
                     self.val_cost_cache.append(val_loss)
                 self.train_cost_cache.append(epoch_cost)
 
             # Early Stop
             if (self.early_stop_patience < np.iinfo(np.int64).max) or (self.learning_schedule_patience < np.iinfo(np.int64).max):
-                assert self.val_data is not None, "No validation data passed"
+                assert X_val is not None, "No validation data passed"
                 a_val = self.predict_proba(X_val)
-                y_valt = self.encode.transform(y_val).T
-                val_loss = compute_cost(a_val, y_valt, self.cost)
+                val_loss = compute_cost(a_val, y_val, self.cost)
 
                 if val_loss < best_loss - self.min_delta:
                     best_loss, wait = val_loss, 0
@@ -293,13 +296,13 @@ class Network(BaseEstimator, TransformerMixin):
         return self
 
     def predict_proba(self, X):
-        caches_forward = []
-        Xt = self.scale.transform(X).T if self.normalize else X.copy().T
-        a_prev = Xt
+        assert X.shape[0] == self.sizes[0], \
+            f"Features mismatch: n_features in X_train is {X.shape[0]}, but input layer expects {self.sizes[0]}"
+
+        a_prev = X
         for l in range(len(self.weights)):
             cache = Network.feedforward(a_prev, self.weights[l], self.biases[l],
                                         activation=self.activation_functions[l])
-            caches_forward.append(cache)
             a_prev = cache['a']
 
         return a_prev
@@ -310,7 +313,9 @@ class Network(BaseEstimator, TransformerMixin):
 
     def score(self, X, y):
         ypred = self.predict(X)
+        y = np.argmax(y, axis=0)
         return accuracy_score(y, ypred)
+
 
 
 
