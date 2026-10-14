@@ -54,6 +54,7 @@ class Network(BaseEstimator, TransformerMixin):
         self.val_cost_cache = []
         self.training_accuracy = []
         self.val_accuracy = []
+        self.t = None
 
     @staticmethod
     def initialize_parameters(layer_dims: list[int], method: str = "naive", random_state=None, weight_scale=0.1, bias_init=0.001):
@@ -183,13 +184,13 @@ class Network(BaseEstimator, TransformerMixin):
                 ]
 
             # Weight update
-            t = n//self.mini_batch_size + 1
+            self.t += 1
             if self.optimizer is not None:
                 self.weights, self.biases = self.optimizer.update_wb(self.weights,
                                                                      self.biases,
                                                                      grads,
                                                                      self.learning_rate,
-                                                                     t)
+                                                                     self.t)
             else:
                 self.weights = [
                     weight - self.learning_rate * grad['dw']
@@ -226,6 +227,8 @@ class Network(BaseEstimator, TransformerMixin):
 
         if self.random_state is None:
             self.random_state = 42
+
+        self.t = 0
 
         # Initialize parameters
         self.weights, self.biases = map(list,
