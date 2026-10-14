@@ -3,9 +3,6 @@ from sklearn.metrics import accuracy_score
 from src.functions import *
 from sklearn.base import BaseEstimator, TransformerMixin
 
-# TODO: Create aptimizer.py to contain momentum, RMSprop, and Adam methods
-# TODO: Pass optimizer to constructor and implement optimizers in fit
-
 class Network(BaseEstimator, TransformerMixin):
     def __init__(self,
                  sizes,
@@ -13,6 +10,7 @@ class Network(BaseEstimator, TransformerMixin):
                  learning_rate=0.1,
                  mini_batch_size=10,
                  cost="mean_squared_error",
+                 optimizer = None,
                  init_method="naive",
                  weight_scale: float = 0.1,
                  bias_init = 0.001,
@@ -24,7 +22,6 @@ class Network(BaseEstimator, TransformerMixin):
                  early_stop_patience = np.inf,
                  learning_schedule_patience = np.inf,
                  min_delta = 1e-4,
-                 momentum = 0.0,
                  tol = 1e-3,
                  monitor_cost=False,
                  monitor_accuracy=False):
@@ -32,6 +29,7 @@ class Network(BaseEstimator, TransformerMixin):
         self.learning_rate = learning_rate
         self.activation_functions = activation_functions
         self.mini_batch_size = mini_batch_size
+        self.optimizer = optimizer
         self.init_method = init_method
         self.weight_scale = weight_scale
         self.bias_init = bias_init
@@ -43,14 +41,10 @@ class Network(BaseEstimator, TransformerMixin):
         self.early_stop_patience = early_stop_patience
         self.learning_schedule_patience = learning_schedule_patience
         self.min_delta = min_delta
-        self.momentum = momentum
         self.tol = tol
         self.monitor_cost = monitor_cost
         self.monitor_accuracy = monitor_accuracy
         self.random_state = random_state
-        self.scale = None
-        self.encode = None
-
         self.weights = None
         self.biases = None
         self.grads = None
@@ -148,7 +142,6 @@ class Network(BaseEstimator, TransformerMixin):
                 cache = Network.feedforward(a_prev, self.weights[l], self.biases[l], activation=self.activation_functions[l])
                 caches_forward.append(cache)
                 a_prev = cache['a']
-                #self.activations.append(cache['a'])
 
             # Cost function
             cost_value = compute_cost(a_prev, y[:,n:n+self.mini_batch_size], self.cost)
@@ -174,30 +167,39 @@ class Network(BaseEstimator, TransformerMixin):
                 grads.append(grads_l)
             grads = grads[::-1]
 
-            if self.grads is None:
-                self.grads = grads
-            for l, grad, grad_prev in zip(range(len(grads)), grads, self.grads):
-                self.grads[l]['dw'] = -self.final_eta * grad['dw'] + self.momentum * grad_prev['dw']
-                self.grads[l]['db'] = -self.final_eta * grad['db'] + self.momentum * grad_prev['db']
+            # Penalties
+            assert len(grads) == len(self.weights)
+            if self.penalty == 'l2':
+                self.weights = [
+                    weight * (1-self.alpha*self.final_eta/X.shape[1])
+                    for weight in self.weights
+                ]
+            elif self.penalty == 'l1':
+                masks = [[weight > 0, weight < 0] for weight in self.weights]
+                sign = [1, -1]
+                self.weights = [
+                    weight - self.final_eta * (self.alpha/X.shape[1]) * np.select(mask, sign, default=0)
+                    for weight, mask in zip(self.weights, masks)
+                ]
 
             # Weight update
-            assert len(grads) == len(self.weights)
-            for l in range(len(grads)):
-                if self.penalty == 'l2':
-                    self.weights[l] *= (1-self.alpha*self.final_eta/X.shape[1])
-                elif self.penalty == 'l1':
-                    mask = [self.weights[l] > 0, self.weights[l] < 0]
-                    sign = [1,-1]
-                    self.weights[l] -= self.final_eta * (self.alpha/X.shape[1]) * np.select(mask, sign, default=0)
-                self.weights[l] += self.grads[l]['dw']
-                self.biases[l] += self.grads[l]['db']
-
+            t = n//self.mini_batch_size + 1
+            if self.optimizer is not None:
+                self.weights, self.biases = self.optimizer.update_wb(self.weights,
+                                                                     self.biases,
+                                                                     grads,
+                                                                     self.learning_rate,
+                                                                     t)
+            else:
+                self.weights = [
+                    weight - self.learning_rate * grad['dw']
+                    for weight, grad in zip(self.weights, grads)
+                ]
+                self.biases = [
+                    bias - self.learning_rate * grad['db']
+                    for bias, grad in zip(self.biases, grads)
+                ]
         epoch_cost /= X.shape[1]
-        if self.penalty == 'l2':
-            epoch_cost += 0.5 * (self.alpha / X.shape[1]) * sum(np.sum(np.square(w)) for w in self.weights)
-        if self.penalty == 'l1':
-            epoch_cost += (self.alpha / X.shape[1]) * sum(np.sum(np.abs(w)) for w in self.weights)
-
         return epoch_cost
 
     def fit(self, X_train, y_train, X_val=None, y_val=None,):
@@ -232,6 +234,9 @@ class Network(BaseEstimator, TransformerMixin):
                                                                            random_state=self.random_state,
                                                                            weight_scale=self.weight_scale,
                                                                            bias_init=self.bias_init)))
+        # Momentum - Initialize Velocities
+        if self.optimizer is not None:
+            self.optimizer.initialize_vs(self.weights, self.biases)
         self.train_cost_cache = []
         self.val_cost_cache = []
         self.training_accuracy = []
