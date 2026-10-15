@@ -55,6 +55,7 @@ class Network(BaseEstimator, TransformerMixin):
         self.training_accuracy = []
         self.val_accuracy = []
         self.t = None
+        self.n_epochs = None
 
     @staticmethod
     def initialize_parameters(layer_dims: list[int], method: str = "naive", random_state=None, weight_scale=0.1, bias_init=0.001):
@@ -248,7 +249,9 @@ class Network(BaseEstimator, TransformerMixin):
 
         rng = np.random.default_rng(self.random_state)
         best_loss, val_loss, wait_sched, wait_stop, best_params = np.inf, np.nan, 0, 0, None
+        self.n_epochs = 0
         for epoch in range(self.max_epochs):
+            self.n_epochs += 1
             perm = rng.permutation(len(X_train))
             X_shuffled = X_train[:,perm]
             y_shuffled = y_train[:,perm]
@@ -263,8 +266,9 @@ class Network(BaseEstimator, TransformerMixin):
                 self.val_accuracy.append(val_score)
 
             if self.verbose:
-                if epoch % 100 == 0:
-                    print(f'epoch: {epoch}, cost: {epoch_cost}')
+                print(f'epoch: {epoch}, cost: {epoch_cost}')
+                if self.monitor_accuracy:
+                    print(f'train score: {train_score}, val score: {val_score}\n ')
 
             if self.monitor_cost:
                 if X_val is not None:
