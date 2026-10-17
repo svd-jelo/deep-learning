@@ -155,3 +155,10 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
     </tr>
   </tbody>
 </table>
+
+# Log
+
+**10/18/2026** - I still don't know what my end goal is here -- do I become an engineer, and focus on development, or become
+a researcher. Is this what engineers/researchers in this field do? Should I go to graduate school to make this formal, to talk more with people having the same interest? I'm certainly turning this into a career, but how? Can I afford this shift
+in career? To sum up, I'm lost... and I hope this "self-study" that I am doing gives me
+an idea where to go.
