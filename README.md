@@ -1,11 +1,10 @@
 # Deep Learning
-The purpose of this repository is to store my notes, outputs for a deep learning course that I'm taking. This will
-also be the place where I track my progress.
+The purpose of this repository is to store my notes, for studying deep learning.
 
-## Ng's Deep Learning (Coursera)
+## Deep Learning by deeplearning.ai (Coursera)
 Primary resource that I follow. Covers the fundamentals, from basic neural nets to convolutional neural networks.
 
-### Neural Networks and Deep Learning
+### Course 1. Neural Networks and Deep Learning
 
 <p>Progress: <img src="https://geps.dev/progress/100?label=%20" width="150" height="10" style="vertical-align: middle;" alt="100%" /> 100%</p>
 
@@ -67,8 +66,8 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
   </tbody>
 </table>
 
-## Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization
-<p>Progress: <img src="https://geps.dev/progress/75?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 75%</p>
+### Course 2. Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization
+<p>Progress: <img src="https://geps.dev/progress/100?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 100%</p>
 
 <table>
   <thead>
@@ -115,56 +114,44 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
     <tr>
       <td rowspan="2" style="text-align: center; vertical-align: middle"> 3 </td>
       <td rowspan="2" style="text-align: center; vertical-align: middle">Hyperparameter Tuning, Batch Normalization and Programming Frameworks</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 3</td>
       <td rowspan="2" style="text-align: center; vertical-align: middle">Oct 17</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - TensorFlow Introduction</td>
     </tr>
   </tbody>
 </table>
 
-## Bishop and Bishop's Deep Learning Foundations and Concepts (book)
-
-Accompanying text with good exercises. In order of relevance instead of chapters.
-
-<p>Progress: <img src="https://geps.dev/progress/0?label=%20" width="150" height="10" style="vertical-align: middle;" alt="50%" /> 0%</p>
+### Course 3. Structuring Machine Learning Projects
+<p>Progress: <img src="https://geps.dev/progress/0?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 0%</p>
 
 <table>
   <thead>
     <tr>
       <th>Week</th>
+      <th>Description</th>
       <th>Status</th>
-      <th>Description (problem set)</th>
+      <th>Task</th>
       <th>Due</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td rowspan="2" style="text-align: center; vertical-align: middle">2</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle"> 1 </td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">ML Strategy 1</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
-      <td rowspan="1" style="text-align: left; vertical-align: middle">
-        Chapter 7 - Gradient Descent
-      </td>
-      <td rowspan="2" style="text-align: center; vertical-align: middle">Sept 26</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz - Bird Recognition in the City of Peacetopia (Quiz Case Study)</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 23</td>
     </tr>
     <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle"> 2 </td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">ML Strategy 2</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
-      <td rowspan="1" style="text-align: left; vertical-align: middle">
-        Chapter 8 - Back Propagation
-      </td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz - Autonomous Driving (Quiz Case Study)</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 25</td>
     </tr>
-    <tr>
-      <td style="text-align: center; vertical-align: middle">3</td>
-      <td style="text-align: center; vertical-align: middle">&#9744;</td>
-      <td style="text-align: left; vertical-align: middle">Chapter 2 - Probabilities</td>
-      <td style="text-align: center; vertical-align: middle">Oct 2</td>
-    </tr>
-    </tbody>
+  </tbody>
 </table>
-
-
-## Goodfellow's Deep Learning (book)
-Accompanying text for deep learning theory and (some) practice.
