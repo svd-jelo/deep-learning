@@ -126,7 +126,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
 </table>
 
 ### Course 3. Structuring Machine Learning Projects
-<p>Progress: <img src="https://geps.dev/progress/50?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 50%</p>
+<p>Progress: <img src="https://geps.dev/progress/100?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 100%</p>
 
 <table>
   <thead>
@@ -149,9 +149,94 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
     <tr>
       <td rowspan="1" style="text-align: center; vertical-align: middle"> 2 </td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">ML Strategy 2</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz - Autonomous Driving (Quiz Case Study)</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 25</td>
+    </tr>
+  </tbody>
+</table>
+
+### Course 4. Convolutional Neural Networks
+<p>Progress: <img src="https://geps.dev/progress/0?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 0%</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Week</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Task</th>
+      <th>Due</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3" style="text-align: center; vertical-align: middle"> 1 </td>
+      <td rowspan="3" style="text-align: center; vertical-align: middle">Foundations of Convolutional Neural Networks</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 1</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 24</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Convolutional Model, Step by Step</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 25</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Convolutional Model Application</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 25</td>
+    </tr>
+    <tr>
+      <td rowspan="3" style="text-align: center; vertical-align: middle"> 2 </td>
+      <td rowspan="3" style="text-align: center; vertical-align: middle">Deep Convolutional Models: Case Studies</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 2</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 31</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Residual Networks</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 31</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Transfer Learning with MobileNet</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 1</td>
+    </tr>
+    <tr>
+      <td rowspan="3" style="text-align: center; vertical-align: middle"> 3 </td>
+      <td rowspan="3" style="text-align: center; vertical-align: middle">Object Detection</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 3</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 7</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Car Detection with YOLO</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 7</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Image Segmentation with U-Net</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 7</td>
+    </tr>
+    <tr>
+      <td rowspan="3" style="text-align: center; vertical-align: middle"> 4 </td>
+      <td rowspan="3" style="text-align: center; vertical-align: middle">Special Applications: Face Recognition & Neural Style Transfer</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 4</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 13</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Face Recognition</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 14</td>
+    </tr>
+    <tr>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Art Generation with Neural Style Transfer</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 14</td>
     </tr>
   </tbody>
 </table>
