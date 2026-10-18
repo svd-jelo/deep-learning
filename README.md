@@ -126,7 +126,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
 </table>
 
 ### Course 3. Structuring Machine Learning Projects
-<p>Progress: <img src="https://geps.dev/progress/0?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 0%</p>
+<p>Progress: <img src="https://geps.dev/progress/50?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 50%</p>
 
 <table>
   <thead>
@@ -142,7 +142,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
     <tr>
       <td rowspan="1" style="text-align: center; vertical-align: middle"> 1 </td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">ML Strategy 1</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz - Bird Recognition in the City of Peacetopia (Quiz Case Study)</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 23</td>
     </tr>
