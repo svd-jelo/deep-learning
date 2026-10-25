@@ -1,7 +1,46 @@
+import json
+
 import numpy as np
 from sklearn.metrics import accuracy_score
 from src.functions import *
 from sklearn.base import BaseEstimator, TransformerMixin
+import torch
+from torch.nn import Module
+from torch.nn.parameter import Parameter
+from torch.nn.functional import sigmoid, relu, tanh
+
+class FullyConnectedLayer(Module):
+    def __init__(self, n_in, n_out, activation_fn=sigmoid, p_dropout=0, random_state=None):
+        super().__init__()
+        self.n_in = n_in
+        self.n_out = n_out
+        self.activation_fn = activation_fn
+        self.p_dropout = p_dropout
+
+        # Initialize weight and biases
+        seed = random_state if not random_state is None else 42
+        self.rng = torch.Generator().manual_seed(seed)
+        self.w = Parameter(torch.normal(mean=0.0, std=np.sqrt(1.0/n_in), size=(n_in, n_out), generator=self.rng))
+        self.b = Parameter(torch.normal(mean=0.0, std=1.0, size=(n_out,), generator=self.rng))
+        self.params = [self.w, self.b]
+
+        #Attributes to be defined later
+        self.inpt = None
+        self.output = None
+        self.y_out = None
+        self.inpt_dropout = None
+        self.output_dropout = None
+
+    def set_inpt(self, inpt, inpt_dropout, mini_batch_size):
+        self.inpt = inpt.reshape((mini_batch_size, self.n_in))
+        self.output = self.activation_fn((1 - self.p_dropout) * torch.matmul(self.inpt, self.w) + self.b)
+        self.y_out = torch.argmax(self.output, dim=1)
+        self.inpt_dropout = dropout_layer(inpt_dropout.reshape((mini_batch_size, self.n_in)), self.p_dropout, self.rng)
+        self.output_dropout = self.activation_fn(torch.matmul(self.inpt_dropout, self.w) + self.b)
+
+    def accuracy(self,y):
+        return torch.mean(torch.eq(y, self.y_out))
+
 
 class Network(BaseEstimator, TransformerMixin):
     def __init__(self,
@@ -151,12 +190,21 @@ class Network(BaseEstimator, TransformerMixin):
 
             # Backward pass
             grads = []
-            da_L = cost_backward(caches_forward[-1]['a'], y[:,n:n+self.mini_batch_size], self.cost)
+
             if len(caches_forward) < 2:
-                a_prev = X[:,n:n+self.mini_batch_size]
+                a_prev = X[:, n:n + self.mini_batch_size]
             else:
                 a_prev = caches_forward[-2]['a']
-            grads_L, da_prev = Network.backward(a_prev, da_L, caches_forward[-1], self.activation_functions[-1])
+
+            if self.activation_functions[-1] == "sigmoid" and self.cost == 'cross_entropy':
+                dz_L = caches_forward[-1]['a'] - y[:,n:n+self.mini_batch_size]
+                dw_L = dz_L @ a_prev.T
+                db_L = np.sum(dz_L, axis=1, keepdims=True)
+                da_prev = caches_forward[-1]['weight'].T @ dz_L
+                grads_L = {'dw': dw_L, 'db': db_L}
+            else:
+                da_L = cost_backward(caches_forward[-1]['a'], y[:,n:n+self.mini_batch_size], self.cost)
+                grads_L, da_prev = Network.backward(a_prev, da_L, caches_forward[-1], self.activation_functions[-1])
 
             grads.append(grads_L)
 
@@ -252,7 +300,7 @@ class Network(BaseEstimator, TransformerMixin):
         self.n_epochs = 0
         for epoch in range(self.max_epochs):
             self.n_epochs += 1
-            perm = rng.permutation(len(X_train))
+            perm = rng.permutation(X_train.shape[1])
             X_shuffled = X_train[:,perm]
             y_shuffled = y_train[:,perm]
             epoch_cost = self.run_epoch(X_shuffled, y_shuffled)
@@ -284,7 +332,7 @@ class Network(BaseEstimator, TransformerMixin):
                 val_loss = compute_cost(a_val, y_val, self.cost)
 
                 if val_loss < best_loss - self.min_delta:
-                    best_loss, wait = val_loss, 0
+                    best_loss, wait_sched, wait_stop = val_loss, 0, 0
                     best_params = ([w.copy() for w in self.weights],
                                    [b.copy() for b in self.biases])
                 else:
@@ -328,6 +376,14 @@ class Network(BaseEstimator, TransformerMixin):
         y = np.argmax(y, axis=0)
         return accuracy_score(y, ypred)
 
+    def save(self, filename):
+        data = {'sizes': self.sizes,
+                'weights': [w.tolist() for w in self.weights],
+                'biases': [b.tolist() for b in self.biases],
+                'activation_functions': self.activation_functions,
+                'cost': self.cost,}
+        with open(filename, 'w') as f:
+            json.dump(data, f)
 
 
 
