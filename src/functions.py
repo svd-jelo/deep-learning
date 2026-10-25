@@ -1,5 +1,6 @@
 import numpy as np
 from numpy import linalg as la
+import torch
 
 # INITIALIZATION METHODS
 def he_initialization(dim, dim_prev, rng: np.random._generator.Generator, bias_init=0.001):
@@ -191,3 +192,8 @@ def cost_backward(a, y, func):
         return quadratic_cost_backward(a, y)
     else:
         raise ValueError('Cost function should be either cross_entropy or mean_squared_error')
+
+def dropout_layer(layer, p_dropout, rng):
+    mask = torch.bernoulli(torch.full(layer.shape, 1-p_dropout), generator=rng)
+    return layer * mask
+
