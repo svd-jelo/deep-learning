@@ -223,20 +223,6 @@ class NeuralNet:
         print("Finished training network.")
         print(f"Best validation accuracy {best_validation_accuracy:.2%} obtained at iteration {best_iteration}")
 
-        # TEST
-        #with torch.no_grad():
-        #    for i in range(num_test_batches):
-        #        X_test_mb = X_test[i * minibatch_size:(i + 1) * minibatch_size]
-        #        y_test_mb = y_test[i * minibatch_size:(i + 1) * minibatch_size]
-        #        activation = X_test_mb
-        #        for layer in self.layers:
-        #            if isinstance(layer, ConvPoolLayer):
-        #                layer.forward(activation, len(X_test_mb))
-        #            else:
-        #                layer.forward(activation, activation, len(X_test_mb))
-        #            activation = layer.output
-        #        test_score += self.layers[-1].accuracy(y_test_mb) * len(X_test_mb) / len(X_test)
-
         return validation_costs, validation_scores #, test_score
 
 class Network(BaseEstimator, TransformerMixin):
