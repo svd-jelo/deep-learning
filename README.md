@@ -157,7 +157,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
 </table>
 
 ### Course 4. Convolutional Neural Networks
-<p>Progress: <img src="https://geps.dev/progress/0?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 0%</p>
+<p>Progress: <img src="https://geps.dev/progress/25?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 25%</p>
 
 <table>
   <thead>
@@ -240,6 +240,14 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
     </tr>
   </tbody>
 </table>
+
+## Geron's Hands-On Machine Learning with Scikit-Learn and Pytorch
+For PyTorch and deep learning practice.
+### Reading List:
+1. *Chapter 10.* Building Neural Networks with PyTorch.
+2. *Chapter 11.* Training Deep Neural Networks - contains all lessons learned in Course 2 and more, but with PyTorch.
+3. *Chapter 12.* Deep Computer Vision Using Convolutional Neural Networks - all lessons learning in Course 3 (and more) but 
+   implemented with PyTorch instead of TensorFlow.
 
 # Log
 
