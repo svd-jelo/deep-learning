@@ -5,23 +5,26 @@ from sklearn.metrics import accuracy_score
 from src.functions import *
 from sklearn.base import BaseEstimator, TransformerMixin
 import torch
-from torch.nn import Module
-from torch.nn.parameter import Parameter
-from torch.nn.functional import sigmoid, relu, tanh
+from torch.nn.functional import sigmoid, conv2d, max_pool2d, softmax, relu
 
-class FullyConnectedLayer(Module):
+class FullyConnectedLayer:
     def __init__(self, n_in, n_out, activation_fn=sigmoid, p_dropout=0, random_state=None):
-        super().__init__()
         self.n_in = n_in
         self.n_out = n_out
         self.activation_fn = activation_fn
         self.p_dropout = p_dropout
 
+        self.init_std = 1.0
+        if self.activation_fn.__name__ == 'sigmoid':
+            self.init_std = np.sqrt(1.0/n_in)
+        elif self.activation_fn.__name__ == 'relu':
+            self.init_std = np.sqrt(2.0/n_in)
+
         # Initialize weight and biases
         seed = random_state if not random_state is None else 42
-        self.rng = torch.Generator().manual_seed(seed)
-        self.w = Parameter(torch.normal(mean=0.0, std=np.sqrt(1.0/n_in), size=(n_in, n_out), generator=self.rng))
-        self.b = Parameter(torch.normal(mean=0.0, std=1.0, size=(n_out,), generator=self.rng))
+        self.rng = torch.Generator(device="mps").manual_seed(seed)
+        self.w = torch.normal(mean=0.0, std=self.init_std, size=(n_in, n_out), generator=self.rng, requires_grad=True, device='mps')
+        self.b = torch.normal(mean=0.0, std=1.0, size=(n_out,), generator=self.rng, requires_grad=True, device='mps')
         self.params = [self.w, self.b]
 
         #Attributes to be defined later
@@ -31,16 +34,210 @@ class FullyConnectedLayer(Module):
         self.inpt_dropout = None
         self.output_dropout = None
 
-    def set_inpt(self, inpt, inpt_dropout, mini_batch_size):
+    def train_forward(self, inpt_dropout, mini_batch_size):
+        self.inpt_dropout = dropout_layer(inpt_dropout.reshape((mini_batch_size, self.n_in)), self.p_dropout, self.rng)
+        self.output_dropout = self.activation_fn(torch.matmul(self.inpt_dropout, self.w) + self.b)
+
+    def forward(self, inpt, mini_batch_size):
         self.inpt = inpt.reshape((mini_batch_size, self.n_in))
         self.output = self.activation_fn((1 - self.p_dropout) * torch.matmul(self.inpt, self.w) + self.b)
         self.y_out = torch.argmax(self.output, dim=1)
-        self.inpt_dropout = dropout_layer(inpt_dropout.reshape((mini_batch_size, self.n_in)), self.p_dropout, self.rng)
-        self.output_dropout = self.activation_fn(torch.matmul(self.inpt_dropout, self.w) + self.b)
 
     def accuracy(self,y):
         return torch.mean(torch.eq(y, self.y_out))
 
+class ConvPoolLayer:
+    def __init__(self, filter_shape, image_shape, activation_fn=sigmoid, pool_size=(2,2), stride=1, random_state=None):
+        self.filter_shape = filter_shape
+        self.image_shape = image_shape
+        self.activation_fn = activation_fn
+        self.pool_size = pool_size
+        self.stride = stride
+
+        # Initialize weight and biases
+        seed = random_state if not random_state is None else 42
+        self.rng = torch.Generator(device="mps").manual_seed(seed)
+        self.w = torch.normal(mean=0.0, std=np.sqrt(1.0/(filter_shape[1] * np.prod(filter_shape[2:]))), size=filter_shape, generator=self.rng, requires_grad=True, device='mps')
+        self.b = torch.normal(mean=0.0, std=1.0, size=(filter_shape[0],), generator=self.rng, requires_grad=True, device='mps')
+        self.params = [self.w, self.b]
+
+        # attributes to be defined later
+        self.inpt = None
+        self.output = None
+        self.output_dropout = None
+
+    def forward(self, inpt, mini_batch_size):
+        self.inpt = inpt.reshape(mini_batch_size,*self.image_shape)
+        conv_out = conv2d(self.inpt, self.w, self.b, stride=self.stride)
+        activation_out = self.activation_fn(conv_out)
+        self.output = max_pool2d(activation_out, self.pool_size)
+        self.output_dropout = self.output #no dropout
+
+class SoftMaxLayer:
+    def __init__(self, n_in, n_out, p_dropout=0, random_state=None):
+        self.n_in = n_in
+        self.n_out = n_out
+        self.p_dropout = p_dropout
+
+        # Initialize weights and biases
+        seed = random_state if not random_state is None else 42
+        self.rng = torch.Generator(device="mps").manual_seed(seed)
+        self.w = torch.zeros((n_in, n_out), requires_grad=True, device='mps')
+        self.b = torch.zeros((n_out,), requires_grad=True, device='mps')
+        self.params = [self.w, self.b]
+
+        # attributes to be defined later
+        self.inpt = None
+        self.logits = None
+        self.output = None
+        self.log_output = None
+        self.y_out = None
+        self.inpt_dropout = None
+        self.output_dropout = None
+        self.logits_dropout = None
+        self.log_output_dropout = None
+
+    def train_forward(self, inpt_dropout, mini_batch_size):
+        self.inpt_dropout = dropout_layer(inpt_dropout.reshape(mini_batch_size, self.n_in), self.p_dropout, self.rng)
+        self.logits_dropout = torch.matmul(self.inpt_dropout, self.w) + self.b
+        self.log_output_dropout = torch.log_softmax(self.logits_dropout, dim=1)
+
+    def forward(self, inpt, mini_batch_size):
+        self.inpt = inpt.reshape((mini_batch_size, self.n_in))
+        self.logits = (1-self.p_dropout)*torch.matmul(self.inpt, self.w) + self.b
+        self.output = softmax(self.logits, dim=1)
+        self.y_out = torch.argmax(self.output, dim=1)
+        self.log_output = torch.log_softmax(self.logits, dim=1)
+
+    def cost(self, y, mode='train'):
+        if mode == 'train':
+            return -(y * self.log_output_dropout).sum(dim=1).mean()
+        elif mode == 'validate':
+            return -(y * self.log_output).sum(dim=1).mean()
+
+    def accuracy(self, y):
+        return torch.mean(torch.eq(y, self.y_out).float())
+
+class NeuralNet:
+    def __init__(self, layers):
+        self.layers = layers
+        self.params = [param for layer in self.layers for param in layer.params]
+
+    def sgd(self, training_data, validation_data, test_data, epochs, minibatch_size, eta, lmbda=0.0, random_state=None):
+        # prepare training data
+        X_train, y_train = training_data
+        num_training_batches = len(X_train) // minibatch_size
+        num_training_batches += 1 if len(X_train) % minibatch_size != 0 else 0
+
+        # prepare validation data
+        X_val, y_val = validation_data
+        num_validation_batches = len(X_val) // minibatch_size
+        num_validation_batches += 1 if len(X_val) % minibatch_size != 0 else 0
+        validation_costs = []
+        validation_scores = []
+
+        # prepared test data
+        X_test, y_test = test_data
+        num_test_batches = len(X_test) // minibatch_size
+        num_test_batches += 1 if len(X_test) % minibatch_size != 0 else 0
+        test_score = 0.0
+
+        l2_norm_squared = 0.0
+        iteration = 0
+        best_validation_accuracy = 0.0
+        rng = torch.Generator().manual_seed(random_state)
+        for epoch in range(epochs):
+            perm = torch.randperm(len(X_train), generator=rng)
+            X_train_shuff = X_train[perm, :]
+            y_train_shuff = y_train[perm, :]
+            validation_accuracy = 0.0
+            validation_cost = 0.0
+
+            # TRAIN
+            for i in range(num_training_batches):
+                iteration = num_training_batches*epoch + i
+                if iteration % 1000 == 0:
+                    print(f"Training mini-batch number {iteration}")
+
+                X_train_mb = X_train_shuff[i * minibatch_size:(i + 1) * minibatch_size]
+                y_train_mb = y_train_shuff[i * minibatch_size:(i + 1) * minibatch_size]
+
+                # Zero-out gradients
+                for layer in self.layers:
+                    if not layer.w.grad is None:
+                        layer.w.grad.zero_()
+                    if not layer.b.grad is None:
+                        layer.b.grad.zero_()
+
+                # Forward
+                activation = X_train_mb
+                for layer in self.layers:
+                    if isinstance(layer, ConvPoolLayer):
+                        layer.forward(activation, len(X_train_mb))
+                    else:
+                        layer.train_forward(activation, len(X_train_mb))
+                    activation = layer.output_dropout
+
+                if lmbda > 0.0:
+                    l2_norm_squared = 0.5 * lmbda * sum((layer.w ** 2).sum() for layer in self.layers)
+
+                training_cost_mb = self.layers[-1].cost(y_train_mb) + l2_norm_squared * len(X_train_mb) / len(X_train)  # cost_ij
+
+                if not torch.isfinite(training_cost_mb).all():
+                    print(f'WARNING: Cost is non-finite at iteration {iteration} with max logit {torch.max(torch.abs(self.layers[-1].logits_dropout))}')
+
+                # Backward
+                training_cost_mb.backward()
+
+                # Update
+                with torch.no_grad():
+                    for layer in self.layers:
+                        layer.w -= eta * layer.w.grad
+                        layer.b -= eta * layer.b.grad
+                        layer.params = [layer.w, layer.b]
+                    self.params = [param for layer in self.layers for param in layer.params]
+
+            # VALIDATE
+            with torch.no_grad():
+                for i in range(num_validation_batches):
+                    X_val_mb = X_val[i * minibatch_size:(i + 1) * minibatch_size]
+                    y_val_mb = y_val[i * minibatch_size:(i + 1) * minibatch_size]
+                    activation = X_val_mb
+                    for layer in self.layers:
+                        if isinstance(layer, ConvPoolLayer):
+                            layer.forward(activation, len(X_val_mb))
+                        else:
+                            layer.forward(activation, len(X_val_mb))
+                        activation = layer.output
+                    validation_accuracy += self.layers[-1].accuracy(torch.argmax(y_val_mb, dim=1)) * len(X_val_mb) / len(X_val)
+                    validation_cost += self.layers[-1].cost(y_val_mb, 'validate') * len(X_val_mb) / len(X_val) + (l2_norm_squared/len(X_val)) * len(X_val_mb) / len(X_val)
+                validation_costs.append(validation_cost.cpu())
+                validation_scores.append(validation_accuracy.cpu())
+
+                print(f'Epoch {epoch}: validation accuracy {validation_accuracy:.2%}')
+                if validation_accuracy > best_validation_accuracy:
+                    print("This is the best validation accuracy to date.")
+                    best_validation_accuracy = validation_accuracy
+                    best_iteration = iteration
+
+        print("Finished training network.")
+        print(f"Best validation accuracy {best_validation_accuracy:.2%} obtained at iteration {best_iteration}")
+
+        # TEST
+        #with torch.no_grad():
+        #    for i in range(num_test_batches):
+        #        X_test_mb = X_test[i * minibatch_size:(i + 1) * minibatch_size]
+        #        y_test_mb = y_test[i * minibatch_size:(i + 1) * minibatch_size]
+        #        activation = X_test_mb
+        #        for layer in self.layers:
+        #            if isinstance(layer, ConvPoolLayer):
+        #                layer.forward(activation, len(X_test_mb))
+        #            else:
+        #                layer.forward(activation, activation, len(X_test_mb))
+        #            activation = layer.output
+        #        test_score += self.layers[-1].accuracy(y_test_mb) * len(X_test_mb) / len(X_test)
+
+        return validation_costs, validation_scores #, test_score
 
 class Network(BaseEstimator, TransformerMixin):
     def __init__(self,
