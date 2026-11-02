@@ -194,6 +194,6 @@ def cost_backward(a, y, func):
         raise ValueError('Cost function should be either cross_entropy or mean_squared_error')
 
 def dropout_layer(layer, p_dropout, rng):
-    mask = torch.bernoulli(torch.full(layer.shape, 1-p_dropout), generator=rng)
+    mask = torch.bernoulli(torch.full(layer.shape, 1-p_dropout, dtype=torch.float, device="mps"), generator=rng)
     return layer * mask
 
