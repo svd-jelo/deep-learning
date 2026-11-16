@@ -190,17 +190,17 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
     <tr>
       <td rowspan="3" style="text-align: center; vertical-align: middle"> 2 </td>
       <td rowspan="3" style="text-align: center; vertical-align: middle">Deep Convolutional Models: Case Studies</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 2</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 31</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Residual Networks</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">Oct 31</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Transfer Learning with MobileNet</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 1</td>
     </tr>
@@ -244,10 +244,14 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
 ## Geron's Hands-On Machine Learning with Scikit-Learn and Pytorch
 For PyTorch and deep learning practice.
 ### Reading List:
-1. *Chapter 10.* Building Neural Networks with PyTorch.
-2. *Chapter 11.* Training Deep Neural Networks - contains all lessons learned in Course 2 and more, but with PyTorch.
-3. *Chapter 12.* Deep Computer Vision Using Convolutional Neural Networks - all lessons learning in Course 3 (and more) but 
+1. [X] *Chapter 10.* Building Neural Networks with PyTorch.
+2. [X] *Chapter 11.* Training Deep Neural Networks - contains all lessons learned in Course 2 and more, but with PyTorch.
+3. [X] *Chapter 12.* Deep Computer Vision Using Convolutional Neural Networks - all lessons learning in Course 3 (and more) but 
    implemented with PyTorch instead of TensorFlow.
+
+## Zhang, Lipton, Li, and Smola's *Dive into Deep Learning*
+Good stuff
+1. [ ] *Chapter 14. - Computer Vision.* Goes well with Course 4, Week 3
 
 # Log
 
