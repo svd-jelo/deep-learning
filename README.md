@@ -157,7 +157,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
 </table>
 
 ### Course 4. Convolutional Neural Networks
-<p>Progress: <img src="https://geps.dev/progress/25?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 25%</p>
+<p>Progress: <img src="https://geps.dev/progress/50?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 50%</p>
 
 <table>
   <thead>
