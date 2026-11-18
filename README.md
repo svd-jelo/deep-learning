@@ -157,7 +157,7 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
 </table>
 
 ### Course 4. Convolutional Neural Networks
-<p>Progress: <img src="https://geps.dev/progress/50?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 50%</p>
+<p>Progress: <img src="https://geps.dev/progress/67?label=%20" width="150" height="10" style="vertical-align: middle;" alt="prog" /> 67%</p>
 
 <table>
   <thead>
@@ -207,36 +207,36 @@ Primary resource that I follow. Covers the fundamentals, from basic neural nets 
     <tr>
       <td rowspan="3" style="text-align: center; vertical-align: middle"> 3 </td>
       <td rowspan="3" style="text-align: center; vertical-align: middle">Object Detection</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 3</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 7</td>
     </tr>
     <tr>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">&#9745;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Car Detection with YOLO</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 7</td>
     </tr>
     <tr>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Image Segmentation with U-Net</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 7</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 21</td>
     </tr>
     <tr>
       <td rowspan="3" style="text-align: center; vertical-align: middle"> 4 </td>
       <td rowspan="3" style="text-align: center; vertical-align: middle">Special Applications: Face Recognition & Neural Style Transfer</td>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Quiz 4</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 13</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 27</td>
     </tr>
     <tr>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Face Recognition</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 14</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 28</td>
     </tr>
     <tr>
       <td rowspan="1" style="text-align: center; vertical-align: middle">&#9744;</td>
       <td rowspan="1" style="text-align: left; vertical-align: middle">Code - Art Generation with Neural Style Transfer</td>
-      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 14</td>
+      <td rowspan="1" style="text-align: center; vertical-align: middle">Nov 28</td>
     </tr>
   </tbody>
 </table>
@@ -246,7 +246,7 @@ For PyTorch and deep learning practice.
 ### Reading List:
 1. [X] *Chapter 10.* Building Neural Networks with PyTorch.
 2. [X] *Chapter 11.* Training Deep Neural Networks - contains all lessons learned in Course 2 and more, but with PyTorch.
-3. [X] *Chapter 12.* Deep Computer Vision Using Convolutional Neural Networks - all lessons learning in Course 3 (and more) but 
+3. [X] *Chapter 12.* Deep Computer Vision Using Convolutional Neural Networks - all lessons learned in Course 3 (and more) but 
    implemented with PyTorch instead of TensorFlow.
 
 ## Zhang, Lipton, Li, and Smola's *Dive into Deep Learning*
